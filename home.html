@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Upgrade - Smart Home Repair Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="universal-header.css" />
+  <link rel="stylesheet" href="universal-footer.css" />
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="services.css" />
+  <link rel="stylesheet" href="auth-styles.css" />
+  <link rel="stylesheet" href="ai-chatbot.css" />
+</head>
+
+<body>
+  <style>
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100% !important;
+    }
+    
+    body.menu-open {
+      overflow: hidden !important;
+      position: fixed !important;
+      width: 100% !important;
+    }
+    
+    .solution-cards {
+      overflow-x: auto !important;
+      max-width: 100% !important;
+    }
+    
+    .solutions {
+      overflow-x: hidden !important;
+      max-width: 100% !important;
+    }
+    
+    section {
+      max-width: 100vw !important;
+      overflow-x: hidden !important;
+    }
+  </style>
+  <!-- Universal Header will be loaded by JavaScript -->
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Welcome to <br />Home Upgrade</h1>
+        <p>Step into a world where your home dreams come to life. At Home Upgrade, we extend a warm welcome to embark on a journey of transformation. Elevate your living spaces with our expert services tailored to meet your unique style and needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info Section -->
+  <section class="info-section">
+    <div class="info-box">
+      <h4>🕒 24/7 Availability</h4>
+      <p>Round-the-clock availability for your home repair needs.</p>
+    </div>
+    <div class="info-box">
+      <h4>✅ Satisfaction Guarantee</h4>
+      <p>Our commitment to your happiness.</p>
+    </div>
+    <div class="info-box">
+      <h4>💰 Transparent Pricing</h4>
+      <p>Clear and upfront pricing for peace of mind.</p>
+    </div>
+    <div class="info-box">
+      <h4>👷 Licensed and Professionals</h4>
+      <p>Expert repairs by licensed and insured professionals.</p>
+    </div>
+  </section>
+
+
+
+  <script src="universal-header.js"></script>
+
+  <!-- Smart home solutions -->
+  <section class="solutions">
+    <h2>One Stop Solution For All Your<br /> House Hold & Corporate Needs!</h2>
+
+    <div class="solution-buttons">
+      <button data-category="ELECTRICIAN">ELECTRICIAN</button>
+      <button data-category="RENOVATION">RENOVATION</button>
+      <button data-category="FABRICATION">FABRICATION</button>
+      <button data-category="FURNITURE">FURNITURE</button>
+      <button data-category="PLUMBING">PLUMBING</button>
+    </div>
+
+    <div class="solution-cards" id="scroll-container">
+      <div class="card" data-category="ELECTRICIAN">
+        <img src="images\download (6).jpg" alt="ELECTRICIAN">
+        <div class="card-text">
+          <h4>Professional Electrician</br> Services</h4>
+          <a href="electricion_details.html">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="card" data-category="RENOVATION">
+        <img src="images\2352cf66fdbc0b8953ccf07d51aff2e2cd4877a3-komple-tadilat-plani.jpeg" alt="RENOVATION">
+        <div class="card-text">
+          <h4>Complete Renovation</br>Services</h4>
+          <a href="renovation_details.html">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="card" data-category="FABRICATION">
+        <img src="images\images (22).jpg" alt="FABRICATION">
+        <div class="card-text">
+          <h4>Custom Fabrication</br>Services</h4>
+          <a href="fabrication_details.html">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="card" data-category="FURNITURE">
+        <img src="images\images (23).jpg" alt="FURNITURE">
+        <div class="card-text">
+          <h4>Quality Furniture</br>Services</h4>
+          <a href="furniture_details.html">Learn More →</a>
+        </div>
+      </div>
+
+      <div class="card" data-category="PLUMBING">
+        <img src="images\604a0190351cde001d89dab6.jpg" alt="PLUMBING">
+        <div class="card-text">
+          <h4>Expert Plumbing</br>Services</h4>
+          <a href="plumbing_details.html">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ---------------- AUTO SCROLL ---------------- */
+    const scrollContainer = document.getElementById('scroll-container');
+    let scrollSpeed = 1;
+    let interval;
+
+    function startScroll() {
+      interval = setInterval(() => {
+        scrollContainer.scrollLeft += scrollSpeed;
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }, 20);
+    }
+
+    function stopScroll() {
+      clearInterval(interval);
+    }
+
+    scrollContainer.addEventListener('mouseenter', stopScroll);
+    scrollContainer.addEventListener('mouseleave', startScroll);
+    startScroll();
+
+    /* ---------------- CATEGORY FILTER BUTTONS ---------------- */
+    const buttons = document.querySelectorAll('.solution-buttons button');
+    const solutionCards = document.querySelectorAll('.solution-cards .card');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const category = btn.getAttribute('data-category');
+
+        solutionCards.forEach(card => {
+          if (card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    /* ---------------- CLICKABLE CARDS (WHY CHOOSE US) ---------------- */
+    const chooseUsCards = document.querySelectorAll('.choose-us .card');
+
+    chooseUsCards.forEach(card => {
+      card.addEventListener('click', () => {
+        chooseUsCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  </script>
+
+  <section class="choose-us">
+    <h2>Why Choose Us?</h2>
+    <p class="intro">
+      Experience peace of mind with our top-notch security features, seamless automation,
+      and exceptional customer support, making us the ideal choice for your smart home needs.
+    </p>
+
+    <div class="cards">
+      <div class="card blue">
+        <div class="icon">🏠</div>
+        <h3>Smart Technology Expert</h3>
+        <p>Our technicians have in-depth knowledge and expertise in technology</p>
+      </div>
+
+      <div class="card">
+        <div class="icon dark">🛠️</div>
+        <h3>Skilled Technicians</h3>
+        <p>Our team of highly skilled and trained, Let’s work!</p>
+      </div>
+
+      <div class="card">
+        <div class="icon dark">🌿</div>
+        <h3>Enhanced Energy Efficiency</h3>
+        <p>We helps monitor and reduce energy consumption</p>
+      </div>
+
+      <div class="card">
+        <div class="icon dark">🎧</div>
+        <h3>Professional Maintenance</h3>
+        <p>We have professional agent to support and maintainance</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="smart-home">
+    <div class="image-side">
+      <img src="images\Laptop-Maintenance-Service.jpg" alt="Smart Home Tablet">
+    </div>
+
+    <div class="text-side">
+      <h2>Optimize Your Smart Home's Performance</h2>
+      <p>
+        Keep your smart home running smoothly with our comprehensive maintenance services.
+        We don’t just fix issues — we help prevent them. Our team provides regular firmware updates, system diagnostics,
+        performance tuning, and security optimizations to ensure every device in your home stays reliable, fast, and
+        fully protected. We also offer personalized upgrade recommendations based on your setup, helping you get the
+        most out of your smart-home ecosystem. With consistent care and expert monitoring, we make sure your entire
+        system remains up-to-date, energy-efficient, and functioning at its absolute best.
+      </p>
+    </div>
+  </section>
+
+  <section class="solar-section">
+    <div class="text-side">
+      <h2>Energy Savings<br>through Solar Efficiency</h2>
+      <p>
+        Performance tuning, and security optimizations to ensure every device in your home stays reliable, fast, and
+        fully protected. We also offer personalized upgrade recommendations based on your setup, helping you get the
+        most out of your smart-home ecosystem. With consistent care and expert monitoring, we make sure your entire
+        system remains up-to-date, energy-efficient, and functioning at its absolute best.
+      </p>
+    </div>
+    <div class="image-side">
+      <img src="images/handman2.jpg" alt="Smart Home Tablet">
+    </div> ecosystem. With consistent care and expert monitoring, we make sure your entire
+        system remains up-to-date, energy-efficient, and functioning at its absolute best.
+      </p>
+    </div>
+  </section>
+
+  <main class="wrap" role="main" aria-labelledby="testimonials-heading">
+    <h2 id="testimonials-heading" class="title">Testimonials</h2>
+    
+    <!-- Left avatars -->
+    <div class="avatars" id="avatars" aria-hidden="true">
+      <!-- avatars injected by script or fallback below -->
+      <div class="avatar-stack" role="list">
+        <img class="avatar small" src="images\indian-businessman-with-his-white-car.jpg" alt="">
+        <img class="avatar small" src="images\portrait-confident-young-businessman-with-his-arms-crossed.jpg" alt="">
+      </div>
+    </div>
+
+    <!-- Center portrait -->
+    <div class="center-card" id="center-card" aria-hidden="true">
+      <img id="center-portrait" class="center-portrait"
+        src="images\happy-business-man-wearing-grey-suit-standing-isolated-white-wall.jpg" alt="">
+    </div>
+
+    <!-- Testimonial content -->
+    <aside class="testimonial" id="testimonial" aria-label="Customer testimonial">
+      <div class="quote-bubble" aria-hidden="true">“</div>
+      <div class="testimonial-body">
+        <p id="testimonial-text">
+          I was extremely impressed with the smart home repair and service provided by HomePro. Their technicians were
+          prompt, knowledgeable, and resolved my issues efficiently. I highly recommend their exceptional service for
+          all smart home needs.
+        </p>
+
+        <div class="author" id="testimonial-author">James Anderson</div>
+        <div class="role" id="testimonial-role">Marketing Manager at Google</div>
+      </div>
+    </aside>
+  </main>
+
+  <section class="blog-section">
+    <h1>Explore Insights in Our Blog</h1>
+    <p class="subtitle">Find lots of insights and information on our blog. Explore, learn, and get inspired today.</p>
+
+    <div class="blog-container">
+
+      <div class="blog-card">
+        <img src="images\images (9).jpg" alt="Smart Home">
+        <div class="blog-info">
+          <span class="date">19 Jan 2023</span>
+          <h2>Understanding Smart Home Systems & Maintenance</h2>
+          <p>Discover the ultimate guide to troubleshooting common smart home system & tech issues. From connectivity
+            problems to device malfunctions...</p>
+          <div class="tags">
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <img src="images\download (1).jpg" alt="Home Repairs">
+        <div class="blog-info">
+          <span class="date">19 Jan 2023</span>
+          <h2>The Ultimate Guide to Home Repairs and Renovations</h2>
+          <p>Discover the ultimate guide to troubleshooting common home repairs and renovations. From minor projects to
+            major renovations...</p>
+          <div class="tags">
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <img src="images\download.jpg" alt="Painting Techniques">
+        <div class="blog-info">
+          <span class="date">19 Jan 2023</span>
+          <h2>Painting Techniques for a Kitchen Refresh</h2>
+          <p>Discover the ultimate guide to troubleshooting common kitchen paint issues and techniques for beautiful
+            upgrades...</p>
+          <div class="tags">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="view-more">
+      <a href="blog.html">View More →</a>
+    </div>
+  </section>
+
+
+  <section class="faq-section">
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq-container">
+      <div class="faq-item">
+        <button class="faq-question">What is a HomePro?</button>
+        <div class="faq-answer">
+          <p>HomePro is a service that helps you manage, repair, and enhance your smart home devices conveniently and
+            efficiently.</p>
+        </div>
+      </div>
+
+      <div class="faq-item active">
+        <button class="faq-question">What types of smart home devices that we provide?</button>
+        <div class="faq-answer">
+          <p>We specialize in servicing and repairing a wide range of smart home devices, including smart lighting
+            systems, thermostats, security cameras, voice assistants, smart locks, and more.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What devices can be included in a smart home system?</button>
+        <div class="faq-answer">
+          <p>Devices like lights, cameras, speakers, thermostats, and locks can be connected for full smart home
+            integration.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">How does a smart home service work?</button>
+        <div class="faq-answer">
+          <p>We visit your home, assess your smart setup, and offer maintenance, troubleshooting, and upgrades as
+            needed.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">What are the benefits of a smart home service?</button>
+        <div class="faq-answer">
+          <p>Smart home services save time, boost security, improve energy efficiency, and make your home more
+            comfortable.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    const questions = document.querySelectorAll(".faq-question");
+
+    questions.forEach(q => {
+      q.addEventListener("click", () => {
+        const parent = q.parentElement;
+        parent.classList.toggle("active");
+      });
+    });
+
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("handyman-loader");
+
+      setTimeout(() => {
+        loader.classList.add("fade-out");
+
+        setTimeout(() => {
+          loader.style.display = "none";
+        }, 5000);
+
+      }, 800); // small delay for smoothness
+    });
+  </script>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <div class="text-content">
+        <h1>Request a<br><span>Free Quote</span></h1>
+        <p>Tell us about your repair needs, and we'll provide a competitive quote</p>
+      </div>
+
+      <div class="quote-box">
+        <h3>Free Quote</h3>
+        <form id="quoteForm">
+          <input type="text" id="quoteName" placeholder="Full name" required>
+          <input type="email" id="quoteEmail" placeholder="Email" required>
+          <input type="text" id="quoteService" placeholder="Repair Needed" required>
+          <button type="submit">Get Estimate</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('quoteName').value.trim();
+        const email = document.getElementById('quoteEmail').value.trim();
+        const service = document.getElementById('quoteService').value.trim();
+        
+        if (!name || !email || !service) {
+          alert('Please fill in all fields.');
+          return;
+        }
+        
+        const quoteData = {
+          name: name,
+          email: email,
+          service: service,
+          message: 'Quote request from home page'
+        };
+        
+        try {
+          const response = await fetch('/api/quotes/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(quoteData)
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            alert('✅ Thank you! We will contact you soon with a quote.');
+            this.reset();
+          } else {
+            alert('Error submitting quote. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Network error. Please try again.');
+        }
+      });
+    }
+  });
+  </script>
+    </div>
+  </section>
+
+  <!-- Universal Footer will be loaded by JavaScript -->
+
+  <script src="universal-footer.js"></script>
+  <script src="booking-system.js"></script>
+  <script src="auth-system.js"></script>
+  <script src="ai-chatbot.js"></script>
+
+
+  <!-- Handyman GIF Loader -->
+  <style>
+    #handyman-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      z-index: 999999;
+      transition: opacity .6s ease, visibility .6s ease;
+    }
+
+    #handyman-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .handyman-gif {
+      width: 300px;
+      max-width: 45vmin;
+      height: auto;
+      display: block;
+    }
+
+    .loader-label {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-weight: 600;
+      font-size: 14px;
+      color: #2a2a2a;
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    @media (max-width:420px) {
+      .handyman-gif {
+        width: 55vmin;
+      }
+    }
+  </style>
+
+  <div id="handyman-loader" role="status" aria-live="polite" aria-label="Loading, please wait">
+    <div style="text-align:center;">
+      <img class="handyman-gif" src="images/handyman_gif.gif" alt="Loading...">
+      <div class="loader-label">HomePro is getting things ready…</div>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('handyman-loader');
+
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+          if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 700);
+      }, 700);
+    });
+  </script>
+
+
+
+  <style>
+    .solar-section {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      padding: 80px 40px;
+      margin: 60px auto;
+      max-width: 1200px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .solar-section .image-side {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .solar-section .image-side img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .solar-section .content {
+      flex: 1;
+      padding: 20px 40px;
+    }
+
+    .solar-section .content h2 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    .solar-section .content p {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .solar-section .learn-more {
+      display: inline-block;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .solar-section .learn-more:hover {
+      color: #2980b9;
+    }
+
+    @media (max-width: 768px) {
+      .solar-section {
+        flex-direction: column;
+        padding: 40px 20px;
+        margin: 30px 20px;
+        gap: 30px;
+      }
+
+      .solar-section .content {
+        padding: 20px;
+      }
+
+      .solar-section .content h2 {
+        font-size: 2rem;
+      }
+    }
+
+    .solar-section {
+      max-width: none !important;
+      width: 100% !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+    }
+  </style>
+
+<!-- WhatsApp Popup -->
+<div id="whatsapp-popup">
+  <a href="https://wa.me/918849081439?text=Hi! I need help with home services" target="_blank">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
+    </svg>
+  </a>
+</div>
+
+<style>
+#whatsapp-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  animation: bounce 2s infinite;
+}
+
+#whatsapp-popup a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s ease;
+}
+
+#whatsapp-popup a:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+</style>
+
+</body>
+
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Upgrade Services - Professional Home Improvement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="universal-header.css">
+    <link rel="stylesheet" href="universal-footer.css">
+    <link rel="stylesheet" href="service.css">
+    <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="auth-styles.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal[style*="display: block"] {
+            display: block !important;
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .sub-services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .sub-service-card {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .sub-service-card:hover {
+            border-color: #3498db;
+        }
+        .sub-service-card.selected {
+            border-color: #27ae60;  
+            background-color: #e8f5e8;
+        }
+        .service-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.2em;
+        }
+        .selected-services {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .total-price {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+        .book-now-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .book-now-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        .time-slot {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .time-slot:hover {
+            border-color: #3498db;
+        }
+        .time-slot.selected {
+            border-color: #27ae60;
+            background-color: #e8f5e8;
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .payment-method {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            border-color: #3498db;
+        }
+        .payment-method.selected {
+            border-color: #27ae60;
+            background-color: #e8f5e8;
+        }
+        .booking-summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Universal Header will be loaded by JavaScript -->
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">🏠 Professional Services</span>
+                <h1>Complete Home Upgrade <span class="highlight">Services</span></h1>
+                <p>Transform your home with our comprehensive range of professional services. From electrical work to smart home automation, we've got you covered with expert solutions.</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Emergency Service</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Satisfaction Rate</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-main-image">
+                    <img src="images\images (1).jpg" alt="Home Upgrade Services">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Figma Style Services Section -->
+<section class="figma-services">
+
+    <!-- Block 1 -->
+    <div class="service-block">
+        <div class="service-text">
+            <h2>Swift and Reliable Solar Panel Repair</h2>
+            <p>If you’re experiencing issues with your solar power system, our skilled technicians are here to help. 
+            We offer fast inspection, diagnosis and repair services for solar components including wiring issues,
+            malfunctioning inverters, or damaged panels.</p>
+        </div>
+
+        <div class="service-images">
+            <img src="images/images (25).jpg"class="img-small">
+            <img src="images/images (24).jpg"  class="img-large">
+            <img src="images/download (7).jpg" class="img-small">
+        </div>
+    </div>
+
+    </section>
+
+    <!-- All Services Section -->
+    <section class="all-services">
+
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Professional Services</h2>
+                <p>Choose from our wide range of expert home services</p>
+            </div>
+            
+            <div class="services-grid" id="servicesContainer">
+                <!-- Services will be loaded dynamically -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="container">
+            <h2>Why Choose Our Services?</h2>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">✅</div>
+                    <h3>Licensed Professionals</h3>
+                    <p>All our technicians are fully licensed, insured, and certified in their respective fields</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🕒</div>
+                    <h3>24/7 Emergency Service</h3>
+                    <p>Round-the-clock availability for urgent repairs and emergency situations</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Transparent Pricing</h3>
+                    <p>Upfront pricing with detailed estimates and no hidden costs</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Quality Guarantee</h3>
+                    <p>100% satisfaction guarantee on all our work with comprehensive warranties</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Expert Team</h3>
+                    <p>Experienced professionals with years of expertise in home improvement</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Fast Service</h3>
+                    <p>Quick response times and efficient project completion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-form">
+        <div class="container">
+            <h2>Get Your Free Service Quote</h2>
+            <form class="quote-form">
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-row">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                    <select name="service" required>
+                        <option value="">Select Service Type</option>
+                        <option value="electrical">Electrical Services</option>
+                        <option value="plumbing">Plumbing Services</option>
+                        <option value="painting">Painting & Decoration</option>
+                        <option value="carpentry">Carpentry & Woodwork</option>
+                        <option value="roofing">Roofing Services</option>
+                        <option value="hvac">HVAC Services</option>
+                        <option value="flooring">Flooring Solutions</option>
+                        <option value="bathroom">Bathroom Renovation</option>
+                        <option value="kitchen">Kitchen Remodeling</option>
+                        <option value="smart-home">Smart Home Automation</option>
+                        <option value="solar">Solar Panel Installation</option>
+                    </select>
+                </div>
+                <textarea name="message" placeholder="Describe your project requirements..." rows="4" required></textarea>
+                <button type="submit">Get Free Quote</button>
+            </form>
+        </div>
+    </section>
+    
+    <script>
+        // Load services from backend API
+        async function renderPublicServices() {
+            const container = document.getElementById('servicesContainer');
+            
+            if (!container) {
+                console.error('Services container not found');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/services');
+                const services = await response.json();
+                console.log('Services loaded from backend:', services);
+                
+                if (!services || services.length === 0) {
+                    container.innerHTML = '<p>No services available</p>';
+                    return;
+                }
+                
+                // Get sub-service counts for each service
+                const servicesWithCounts = await Promise.all(
+                    services.filter(s => s.isActive).map(async (service) => {
+                        try {
+                            const subResponse = await fetch(`/api/sub-services/${service._id}`);
+                            const subServices = await subResponse.json();
+                            return { ...service, subServiceCount: subServices.length };
+                        } catch (error) {
+                            console.error('Error loading sub-services for', service.title);
+                            return { ...service, subServiceCount: 0 };
+                        }
+                    })
+                );
+                
+                container.innerHTML = servicesWithCounts.map(s => `
+                    <div class="service-card" data-id="${s._id}">
+                        <div class="service-icon">${s.icon || ''}</div>
+                        <h3>${s.title}</h3>
+                        <p class="service-count">${s.subServiceCount} services</p>
+                        <p>${s.description || ''}</p>
+                        <button class="book-btn" onclick="openSubServices('${s._id}')">Book</button>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading services:', error);
+                container.innerHTML = '<p style="color: red;">Error loading services. Please try again later.</p>';
+            }
+        }
+
+        // All booking functionality is handled by booking-system.js
+
+        // Load services on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Loading services from backend...');
+            renderPublicServices();
+        });
+        
+        // Refresh services (for admin updates)
+        function refreshServices() {
+            renderPublicServices();
+        }
+        
+        // Auto-refresh every 30 seconds to get updates
+        setInterval(refreshServices, 30000);
+    </script>
+
+    <!-- Universal Footer will be loaded by JavaScript -->
+
+    <script src="universal-header.js"></script>
+    <script src="universal-footer.js"></script>
+    <script src="quote-system.js"></script>
+    <script src="booking-system.js"></script>
+    <script src="auth-system.js"></script>
+    <!-- Scripts -->
+    <script src="universal-header.js"></script>
+    <script src="universal-footer.js"></script>
+    <script src="service-loader.js"></script>
+    <script src="booking-system.js"></script>
+</body>
+</html>

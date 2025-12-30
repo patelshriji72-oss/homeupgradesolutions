@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Admin - Home Upgrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #ffd700;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .subscribers-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .subscriber-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .export-btn, .clear-btn {
+            background: #333;
+            color: #ffd700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .clear-btn {
+            background: #f44336;
+            color: white;
+        }
+        
+        .export-btn:hover, .clear-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffd700, #ffeb3b);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            min-width: 300px;
+        }
+        
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" style="color: red; display: none;">Invalid credentials!</p>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="container" style="display: none;">
+        <div class="header">
+            <h1>📧 Newsletter Admin</h1>
+            <p>Manage your newsletter subscribers</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalSubscribers">0</div>
+                    <div>Total Subscribers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todaySubscribers">0</div>
+                    <div>Today's Signups</div>
+                </div>
+            </div>
+            
+            <h3>Subscribers List</h3>
+            <div class="subscribers-list" id="subscribersList">
+                <p>No subscribers yet.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="export-btn" onclick="exportSubscribers()">📥 Export CSV</button>
+                <button class="clear-btn" onclick="clearSubscribers()">🗑️ Clear All</button>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Admin credentials
+        const ADMIN_USERNAME = 'admin';
+        const ADMIN_PASSWORD = 'homeupgrade2024';
+        
+        // Check if user is logged in
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadSubscribers();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        }
+        
+        // Login function
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                checkAuth();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            checkAuth();
+        }
+        
+        // Initialize
+        checkAuth();
+        function loadSubscribers() {
+            const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            const subscribersList = document.getElementById('subscribersList');
+            const totalCount = document.getElementById('totalSubscribers');
+            
+            totalCount.textContent = subscribers.length;
+            
+            if (subscribers.length === 0) {
+                subscribersList.innerHTML = '<p>No subscribers yet.</p>';
+                return;
+            }
+            
+            subscribersList.innerHTML = subscribers.map((email, index) => `
+                <div class="subscriber-item">
+                    <span>${email}</span>
+                    <button onclick="removeSubscriber(${index})" style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        function removeSubscriber(index) {
+            let subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            subscribers.splice(index, 1);
+            localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+            loadSubscribers();
+        }
+        
+        function exportSubscribers() {
+            const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
+            if (subscribers.length === 0) {
+                alert('No subscribers to export!');
+                return;
+            }
+            
+            const csv = 'Email\n' + subscribers.join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'newsletter-subscribers.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function clearSubscribers() {
+            if (confirm('Are you sure you want to clear all subscribers?')) {
+                localStorage.removeItem('newsletterSubscribers');
+                loadSubscribers();
+            }
+        }
+        
+        // Load subscribers on page load
+        loadSubscribers();
+        
+        // Refresh every 5 seconds
+        setInterval(() => {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                loadSubscribers();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

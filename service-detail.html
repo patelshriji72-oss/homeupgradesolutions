@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details - Home Upgrade</title>
+    <link rel="stylesheet" href="universal-header.css">
+    <link rel="stylesheet" href="responsive-global.css">
+    <link rel="stylesheet" href="service-detail.css">
+</head>
+<body>
+    <!-- Universal Header will be loaded by JavaScript -->
+
+    <!-- Service Hero Section -->
+    <section class="service-hero">
+        <div class="container">
+            <h1 id="service-title">Service Name</h1>
+            <p id="service-description">Professional service description</p>
+        </div>
+    </section>
+
+    <!-- Service Details -->
+    <section class="service-details">
+        <div class="container">
+            <div class="details-grid">
+                <div class="service-info">
+                    <h2>What We Offer</h2>
+                    <ul id="service-features">
+                        <li>Professional service</li>
+                        <li>Quality guarantee</li>
+                        <li>24/7 support</li>
+                    </ul>
+                </div>
+                <div class="service-image">
+                    <img id="service-img" src="images/images (1).jpg" alt="Service Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking System -->
+    <section class="booking-section">
+        <div class="container">
+            <h2>Book Your Service</h2>
+            <form class="booking-form" id="bookingForm">
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-row">
+                    <input type="tel" name="phone" placeholder="Phone Number" required>
+                    <select id="service-select" name="service" required>
+                        <option value="">Select Service</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="date" name="preferredDate" required>
+                    <select name="preferredTime" required>
+                        <option value="">Preferred Time</option>
+                        <option value="morning">Morning (9AM-12PM)</option>
+                        <option value="afternoon">Afternoon (12PM-5PM)</option>
+                        <option value="evening">Evening (5PM-8PM)</option>
+                    </select>
+                </div>
+                <textarea name="requirements" placeholder="Describe your requirements..." rows="4" required></textarea>
+                <button type="submit">Book Service Now</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="universal-header.js"></script>
+    <script src="service-detail.js"></script>
+</body>
+</html>

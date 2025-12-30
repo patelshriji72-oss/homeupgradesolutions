@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; }
+
+.navbar {
+  background: #ffd700;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo { font-size: 24px; font-weight: bold; color: #2c3e50; }
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 16px;
+}
+
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffd700;
+    flex-direction: column;
+    display: none;
+  }
+  
+  .nav-links.show {
+    display: flex;
+  }
+  
+  .nav-links li {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .nav-links a {
+    display: block;
+    padding: 15px 20px;
+    width: 100%;
+  }
+  
+  .burger {
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">Home Upgrade</div>
+  
+  <ul class="nav-links" id="navLinks">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="service.html">Service</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  
+  <button class="burger" id="burger">☰</button>
+</nav>
+
+<div style="padding: 50px; text-align: center;">
+  <h1>Test Mobile Menu</h1>
+  <p>Resize browser to mobile width and click burger menu</p>
+</div>
+
+<script>
+document.getElementById('burger').addEventListener('click', function() {
+  var menu = document.getElementById('navLinks');
+  menu.classList.toggle('show');
+});
+</script>
+
+</body>
+</html>

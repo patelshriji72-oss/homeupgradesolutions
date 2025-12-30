@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Services</title>
+</head>
+<body>
+    <h1>Service Store Test</h1>
+    <button onclick="testServices()">Test Services</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+    <div id="output"></div>
+
+    <script src="services-store.js"></script>
+    <script>
+        function testServices() {
+            console.log('Testing services...');
+            const services = ServiceStore.loadAll();
+            console.log('Services:', services);
+            
+            document.getElementById('output').innerHTML = `
+                <h3>Services Found: ${services.length}</h3>
+                <pre>${JSON.stringify(services, null, 2)}</pre>
+            `;
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('homeupgrade_services_v1');
+            alert('Storage cleared');
+        }
+        
+        // Auto test on load
+        window.onload = testServices;
+    </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Upgrade - Contact Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="universal-header.css">
+    <link rel="stylesheet" href="universal-footer.css">
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+
+    <!-- Universal Header will be loaded by JavaScript -->
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-badge">📞 Contact Us</span>
+                    <h1>Let's Transform Your <span class="highlight">Home Together</span></h1>
+                    <p>Ready to upgrade your home? Get in touch with our expert team for a free consultation and quote. We're here to make your dream home a reality.</p>
+                    <div class="quick-contact">
+                        <a href="tel:+919512747555" class="contact-btn">
+                            <i class="fas fa-phone"></i>
+                            <span>Call Now</span>
+                        </a>
+                        <a href="https://wa.me/919512747555" class="contact-btn whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="contact-card">
+                        <div class="card-header">
+                            <h3>Quick Contact</h3>
+                            <div class="online-status">
+                                <span class="status-dot"></span>
+                                <span>Online Now</span>
+                            </div>
+                        </div>
+                        <div class="contact-methods">
+                            <div class="method">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 95127 47555</span>
+                            </div>
+                            <div class="method">
+                                <i class="fas fa-envelope"></i>
+                                <span>info@homeupgrade.in</span>
+                            </div>
+                            <div class="method">
+                                <i class="fas fa-clock"></i>
+                                <span>24/7 Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="section-header">
+                        <span class="section-badge">Get In Touch</span>
+                        <h2>Ready to Start Your Project?</h2>
+                        <p>Fill out the form and we'll get back to you within 24 hours with a detailed quote and consultation.</p>
+                    </div>
+                    
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Visit Our Office</h4>
+                                <p>123 Home Street, Upgrade City, HC 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Call Us Anytime</h4>
+                                <p>+91 95127 47555</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Email Us</h4>
+                                <p>info@homeupgrade.in</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Working Hours</h4>
+                                <p>24/7 Emergency Service Available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-header">
+                            <h3>Get Your Free Quote</h3>
+                            <p>Tell us about your project and we'll provide a detailed estimate</p>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service Needed *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="electrical">Electrical Work</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="renovation">Home Renovation</option>
+                                <option value="furniture">Furniture & Fabrication</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us more about your project..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="budget">Estimated Budget</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select budget range</option>
+                                <option value="under-10k">Under ₹10,000</option>
+                                <option value="10k-25k">₹10,000 - ₹25,000</option>
+                                <option value="25k-50k">₹25,000 - ₹50,000</option>
+                                <option value="50k-100k">₹50,000 - ₹1,00,000</option>
+                                <option value="above-100k">Above ₹1,00,000</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <span>Get Free Quote</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Find Us</span>
+                <h2>Visit Our Location</h2>
+                <p>Come visit our office for in-person consultations and to see our work samples</p>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.991982230788!2d72.50457897443812!3d23.027598316094106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f0b4b1e2e3%3A0x3c3e5a76b00286b7!2sPNTC%20Trade%20Center%2C%20Prahladnagar%2C%20Ahmedabad%2C%20Gujarat%20380015!5e0!3m2!1sen!2sin!4v1731486258912!5m2!1sen!2sin"
+                        width="100%" 
+                        height="400" 
+                        style="border:0; border-radius: 15px;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <div class="location-info">
+                    <div class="location-card">
+                        <h4>Home Upgrade Office</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> PNTC Trade Center, Prahladnagar, Ahmedabad, Gujarat 380015</p>
+                        <p><i class="fas fa-phone"></i> +91 95127 47555</p>
+                        <p><i class="fas fa-envelope"></i> info@homeupgrade.in</p>
+                        <div class="directions-btn">
+                            <a href="https://maps.google.com/?q=PNTC+Trade+Center,+Prahladnagar,+Ahmedabad" target="_blank">
+                                <i class="fas fa-directions"></i>
+                                Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">FAQ</span>
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions about our services</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How quickly can you start my project?</h4>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We can typically start most projects within 2-3 days of confirmation. Emergency repairs can be started within 24 hours.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Do you provide free estimates?</h4>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We provide completely free, no-obligation estimates for all our services. Our experts will visit your location and provide detailed quotes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Are your technicians licensed and insured?</h4>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! All our technicians are fully licensed, certified, and insured. We maintain comprehensive insurance coverage for your peace of mind.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What payment methods do you accept?</h4>
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept cash, bank transfers, UPI payments, and all major credit/debit cards. We also offer flexible payment plans for larger projects.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Universal Footer will be loaded by JavaScript -->
+
+    <script>
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('firstName') + ' ' + formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                subject: formData.get('service'),
+                message: formData.get('message')
+            };
+            
+            try {
+                // Send to backend
+                const response = await fetch('/api/contact/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Thank you for your inquiry! We will contact you within 24 hours.');
+                    this.reset();
+                } else {
+                    alert('Error submitting form. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                
+                faqItem.classList.toggle('active');
+                
+                if (faqItem.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.classList.replace('fa-plus', 'fa-minus');
+                } else {
+                    answer.style.maxHeight = '0';
+                    icon.classList.replace('fa-minus', 'fa-plus');
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    <script src="universal-header.js"></script>
+    <script src="universal-footer.js"></script>
+    <!-- ========== SVG HANDYMAN LOADER (DROP BEFORE </body>) ========== -->
+<style>
+  /* loader container */
+  #svg-handyman-loader {
+    position: fixed;
+    inset: 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: #ffffff;
+    z-index: 999999;
+    transition: opacity .6s ease, visibility .6s ease;
+  }
+  #svg-handyman-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* scale the svg nicely */
+  .handyman-svg {
+    width: 300px;
+    max-width: 45vmin;
+    height: auto;
+    display:block;
+  }
+
+  /* subtle body bounce */
+  .handyman-body {
+    transform-origin: 50% 60%;
+    animation: bodyBounce 1400ms ease-in-out infinite;
+  }
+  @keyframes bodyBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* Common hand style: set transform-origin in CSS so rotate is around shoulder */
+  .left-arm, .right-arm {
+    transform-box: fill-box;
+    transform-origin: 30% 40%; /* adjusted per group */
+    will-change: transform;
+  }
+
+  .left-arm { animation: leftHandRotate 1700ms cubic-bezier(.4,.0,.2,1) infinite; }
+  .right-arm { animation: rightHandRotate 1200ms cubic-bezier(.4,.0,.2,1) infinite; }
+
+  /* make the left hand rotate in a circular arc */
+  @keyframes leftHandRotate {
+    0%   { transform: rotate(-18deg) translateY(0) translateX(0); }
+    25%  { transform: rotate(8deg) translateY(-6px) translateX(2px); }
+    50%  { transform: rotate(28deg) translateY(-10px) translateX(4px); }
+    75%  { transform: rotate(8deg) translateY(-6px) translateX(2px); }
+    100% { transform: rotate(-18deg) translateY(0) translateX(0); }
+  }
+  /* right hand does slightly different timing/arc */
+  @keyframes rightHandRotate {
+    0%   { transform: rotate(18deg) translateY(0) translateX(0); }
+    25%  { transform: rotate(-6deg) translateY(-6px) translateX(-2px); }
+    50%  { transform: rotate(-28deg) translateY(-10px) translateX(-4px); }
+    75%  { transform: rotate(-6deg) translateY(-6px) translateX(-2px); }
+    100% { transform: rotate(18deg) translateY(0) translateX(0); }
+  }
+
+  /* optional smaller extra arms/tools - staggered */
+  .mid-arm { animation: midArmRotate 2000ms linear infinite; transform-origin: 50% 50%; }
+  @keyframes midArmRotate {
+    0% { transform: rotate(0deg) translateY(0); }
+    50% { transform: rotate(10deg) translateY(-6px); }
+    100% { transform: rotate(0deg) translateY(0); }
+  }
+
+  /* speech bubble or label */
+  .loader-label {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-weight: 600;
+    font-size: 14px;
+    color: #2a2a2a;
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  /* responsiveness - smaller on narrow screens */
+  @media (max-width:420px) {
+    .handyman-svg { width: 55vmin; }
+  }
+</style>
+
+<script>
+  // hide loader after full page load (smooth fade)
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('svg-handyman-loader');
+
+    // keep it for a short moment for visibility (adjust timing as needed)
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      // (optional) remove from DOM after transition
+      setTimeout(() => {
+        if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+      }, 700);
+    }, 700); // keep for 700ms after load
+  });
+</script>
+</body>
+</html>

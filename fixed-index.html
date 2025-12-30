@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Upgrade - Smart Home Repair Services</title>
+</head>
+<body>
+  <!-- WORKING MOBILE NAVIGATION -->
+  <nav style="background:#ffd700;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:relative;">
+    <div style="font-size:24px;font-weight:bold;color:#2c3e50;">Home Upgrade</div>
+    
+    <ul id="menu" style="display:flex;list-style:none;gap:30px;margin:0;padding:0;">
+      <li><a href="home.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;">Home</a></li>
+      <li><a href="service.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;">Service</a></li>
+      <li><a href="blog.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;">Blog</a></li>
+      <li><a href="aboutus.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;">About Us</a></li>
+      <li><a href="contact.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;">Contact</a></li>
+    </ul>
+    
+    <button id="burger" style="display:none;background:none;border:none;font-size:24px;color:#2c3e50;cursor:pointer;">☰</button>
+  </nav>
+
+  <div style="padding:50px 20px;text-align:center;">
+    <h1>Test Mobile Menu</h1>
+    <p>Resize browser to mobile width and click burger icon</p>
+  </div>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('menu');
+    
+    // Show burger on mobile
+    function checkWidth() {
+      if (window.innerWidth <= 768) {
+        burger.style.display = 'block';
+        menu.style.display = 'none';
+      } else {
+        burger.style.display = 'none';
+        menu.style.display = 'flex';
+      }
+    }
+    
+    // Toggle menu
+    burger.onclick = function() {
+      if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'flex';
+        menu.style.position = 'absolute';
+        menu.style.top = '100%';
+        menu.style.left = '0';
+        menu.style.width = '100%';
+        menu.style.background = '#ffd700';
+        menu.style.flexDirection = 'column';
+        menu.style.gap = '0';
+        menu.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+      } else {
+        menu.style.display = 'none';
+      }
+    };
+    
+    window.onresize = checkWidth;
+    checkWidth();
+  </script>
+</body>
+</html>

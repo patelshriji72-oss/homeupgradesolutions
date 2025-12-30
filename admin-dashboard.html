@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HomeUpgrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            padding: 30px 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo {
+            padding: 0 30px 30px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .logo h2 {
+            color: #2d3748;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 16px;
+        }
+        
+        .nav-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+        }
+        
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: #667eea;
+        }
+        
+        .nav-item i {
+            margin-right: 12px;
+            width: 20px;
+            font-size: 18px;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #2d3748;
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.3px;
+        }
+        
+        .logout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .logout-btn:hover::before {
+            left: 100%;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .logout-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .content h3 {
+            color: #2d3748;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .table td {
+            padding: 18px 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            color: #4a5568;
+            background: white;
+        }
+        
+        .table tr:hover td {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        /* Professional Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 3px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn i {
+            font-size: 12px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+        }
+        
+        .hidden { display: none; }
+        
+        .add-btn {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+        
+        .add-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.6s;
+        }
+        
+        .add-btn:hover::before {
+            left: 100%;
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+        
+        .add-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+        }
+        
+        .add-btn i {
+            font-size: 14px;
+        }
+        
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status.confirmed {
+            background: rgba(72, 187, 120, 0.1);
+            color: #38a169;
+        }
+        
+        .status.pending {
+            background: rgba(237, 137, 54, 0.1);
+            color: #dd6b20;
+        }
+        
+        /* Modal Styling */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal > div {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal input, .modal textarea, .modal select {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .modal input:focus, .modal textarea:focus, .modal select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .modal-btn-success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+        
+        .modal-btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .modal-btn-secondary:hover {
+            background: #edf2f7;
+        }
+        
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 2000;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .mobile-toggle i {
+            font-size: 20px;
+            color: #667eea;
+        }
+        
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        /* Responsive Breakpoints */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+            
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+            }
+            
+            .main-content {
+                margin-left: 220px;
+                padding: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                background: #ffffff;
+                box-shadow: 2px 0 30px rgba(0, 0, 0, 0.2);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px 15px;
+                padding-top: 80px;
+            }
+            
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .content h3 {
+                font-size: 20px;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .table {
+                font-size: 13px;
+            }
+            
+            .table th, .table td {
+                padding: 12px 8px;
+            }
+            
+            .btn {
+                padding: 8px 14px;
+                font-size: 12px;
+                margin: 2px;
+            }
+            
+            .add-btn {
+                padding: 12px 20px;
+                font-size: 13px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 15px 10px;
+                padding-top: 70px;
+            }
+            
+            .header {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 15px;
+                border-radius: 15px;
+            }
+            
+            .content h3 {
+                font-size: 18px;
+            }
+            
+            .table {
+                min-width: 600px;
+                font-size: 12px;
+            }
+            
+            .table th, .table td {
+                padding: 8px 6px;
+                white-space: nowrap;
+            }
+            
+            .btn {
+                padding: 7px 12px;
+                font-size: 11px;
+                margin: 1px;
+            }
+            
+            .btn i {
+                font-size: 10px;
+            }
+            
+            .add-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+            
+            .logout-btn {
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>🏠 HomeUpgrade</h2>
+        </div>
+        
+        <button class="nav-item active" data-tab="quotes">
+            <i class="fas fa-quote-left"></i>
+            <span>Quotes</span>
+        </button>
+        
+        <button class="nav-item" data-tab="bookings">
+            <i class="fas fa-calendar-check"></i>
+            <span>Bookings</span>
+        </button>
+        
+        <button class="nav-item" data-tab="subscribers">
+            <i class="fas fa-envelope"></i>
+            <span>Subscribers</span>
+        </button>
+        
+        <button class="nav-item" data-tab="contacts">
+            <i class="fas fa-comments"></i>
+            <span>Contacts</span>
+        </button>
+        
+        <button class="nav-item" data-tab="services">
+            <i class="fas fa-cogs"></i>
+            <span>Services</span>
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <button onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalQuotes">0</div>
+                <div class="stat-label">Total Quotes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSubscribers">0</div>
+                <div class="stat-label">Newsletter Subscribers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalContacts">0</div>
+                <div class="stat-label">Contact Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalBookings">0</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingQuotes">0</div>
+                <div class="stat-label">Pending Quotes</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="quotes-content">
+                <h3>Quote Requests</h3>
+                <div class="table-container">
+                    <table class="table" id="quotesTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Service</th>
+                                <th>Budget</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="bookings-content" class="hidden">
+                <h3>Service Bookings</h3>
+                <div class="table-container">
+                    <table class="table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Service</th>
+                                <th>Date & Time</th>
+                                <th>Amount</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="subscribers-content" class="hidden">
+                <h3>Newsletter Subscribers</h3>
+                <div class="table-container">
+                    <table class="table" id="subscribersTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Subscribed Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="contacts-content" class="hidden">
+                <h3>Contact Messages</h3>
+                <div class="table-container">
+                    <table class="table" id="contactsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="services-content" class="hidden">
+                <h3>
+                    <span><i class="fas fa-cogs"></i> Services Management</span>
+                    <button class="add-btn" onclick="openAddServiceForm()">
+                        <i class="fas fa-plus"></i> Add New Service
+                    </button>
+                </h3>
+                <div class="table-container">
+                    <table class="table" id="servicesTable">
+                        <thead>
+                            <tr>
+                                <th>Icon</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Sub-Services</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Check authentication
+        if (!localStorage.getItem('adminLoggedIn')) {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Load dashboard data
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin/stats');
+                const stats = await response.json();
+                document.getElementById('totalQuotes').textContent = stats.totalQuotes;
+                document.getElementById('totalBookings').textContent = stats.totalBookings;
+                document.getElementById('totalSubscribers').textContent = stats.totalSubscribers;
+                document.getElementById('totalContacts').textContent = stats.totalContacts;
+                document.getElementById('pendingQuotes').textContent = stats.pendingQuotes;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadQuotes() {
+            try {
+                const response = await fetch('/api/quotes');
+                const quotes = await response.json();
+                const tbody = document.querySelector('#quotesTable tbody');
+                tbody.innerHTML = quotes.map(quote => `
+                    <tr>
+                        <td>${quote.name}</td>
+                        <td>${quote.email}</td>
+                        <td>${quote.phone || 'N/A'}</td>
+                        <td>${quote.service || 'N/A'}</td>
+                        <td>${quote.budget || 'N/A'}</td>
+                        <td>${new Date(quote.submittedAt).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading quotes:', error);
+            }
+        }
+
+        async function loadSubscribers() {
+            try {
+                const response = await fetch('/api/newsletter/subscribers');
+                const subscribers = await response.json();
+                const tbody = document.querySelector('#subscribersTable tbody');
+                tbody.innerHTML = subscribers.map(sub => `
+                    <tr>
+                        <td>${sub.email}</td>
+                        <td>${new Date(sub.subscribedAt).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading subscribers:', error);
+            }
+        }
+
+        async function loadContacts() {
+            try {
+                const response = await fetch('/api/contacts');
+                const contacts = await response.json();
+                const tbody = document.querySelector('#contactsTable tbody');
+                tbody.innerHTML = contacts.map(contact => `
+                    <tr>
+                        <td>${contact.name}</td>
+                        <td>${contact.email}</td>
+                        <td>${contact.subject || 'N/A'}</td>
+                        <td>${contact.message}</td>
+                        <td>${new Date(contact.submittedAt).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading contacts:', error);
+            }
+        }
+
+        async function loadBookings() {
+            try {
+                const response = await fetch('/api/bookings');
+                const bookings = await response.json();
+                const tbody = document.querySelector('#bookingsTable tbody');
+                tbody.innerHTML = bookings.map(booking => `
+                    <tr>
+                        <td>${booking.bookingId}</td>
+                        <td>${booking.customerName}<br><small>${booking.customerPhone}</small></td>
+                        <td>${booking.serviceCategoryName}<br><small>${booking.selectedServices.length} services</small></td>
+                        <td>${new Date(booking.serviceDate).toLocaleDateString()}<br><small>${booking.timeSlot}</small></td>
+                        <td>₹${booking.totalPrice}</td>
+                        <td>${booking.paymentMethod.toUpperCase()}<br><small>${booking.paymentStatus}</small></td>
+                        <td><span class="status ${booking.bookingStatus}">${booking.bookingStatus}</span></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+            }
+        }
+
+        async function renderAdminServices() {
+            try {
+                const response = await fetch('/api/services');
+                const services = await response.json();
+                
+                const servicesWithCounts = await Promise.all(
+                    services.map(async (service) => {
+                        try {
+                            const subResponse = await fetch(`/api/sub-services/${service._id}`);
+                            const subServices = await subResponse.json();
+                            return { ...service, subServiceCount: subServices.length };
+                        } catch (error) {
+                            return { ...service, subServiceCount: 0 };
+                        }
+                    })
+                );
+                
+                const tbody = document.querySelector('#servicesTable tbody');
+                tbody.innerHTML = servicesWithCounts.map(service => `
+                    <tr>
+                        <td style="font-size: 1.5em;">${service.icon}</td>
+                        <td>${service.title}</td>
+                        <td>${service.description || 'N/A'}</td>
+                        <td>${service.subServiceCount} services</td>
+                        <td>${service.category || 'N/A'}</td>
+                        <td><span style="color: ${service.isActive ? 'green' : 'red'}">${service.isActive ? 'Active' : 'Inactive'}</span></td>
+                        <td>
+                            <button class="btn btn-info" onclick="openSubServiceAdmin('${service._id}')"><i class="fas fa-list"></i> Sub-Services</button>
+                            <button class="btn btn-success" onclick="editService('${service._id}')"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-danger" onclick="deleteServiceHandler('${service._id}')"><i class="fas fa-trash"></i> Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading services:', error);
+            }
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('[id$="-content"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabName + '-content').classList.remove('hidden');
+            
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if (item.getAttribute('data-tab') === tabName) {
+                    item.classList.add('active');
+                }
+            });
+            
+            if (tabName === 'quotes') loadQuotes();
+            else if (tabName === 'bookings') loadBookings();
+            else if (tabName === 'subscribers') loadSubscribers();
+            else if (tabName === 'contacts') loadContacts();
+            else if (tabName === 'services') renderAdminServices();
+            
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.href = 'admin-login.html';
+        }
+
+        function openAddServiceForm() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = 'addServiceModal';
+            modal.innerHTML = `
+                <div style="background:white;padding:30px;border-radius:16px;max-width:500px;width:95%;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h3 style="font-size:20px;font-weight:700;color:#2d3748;">Add New Service</h3>
+                        <button onclick="closeAddServiceModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#718096;transition:color 0.2s;" onmouseover="this.style.color='#2d3748'" onmouseout="this.style.color='#718096'">&times;</button>
+                    </div>
+                    
+                    <form id="addServiceForm">
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Service Title *</label>
+                            <input type="text" id="serviceTitle" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;transition:all 0.2s;">
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Description</label>
+                            <textarea id="serviceDescription" rows="3" style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;resize:vertical;font-size:14px;transition:all 0.2s;"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Category *</label>
+                            <select id="serviceCategory" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;transition:all 0.2s;">
+                                <option value="">Select Category</option>
+                                <option value="electrical">Electrical Services</option>
+                                <option value="plumbing">Plumbing Services</option>
+                                <option value="appliance">Appliance Repair</option>
+                                <option value="ac">AC Services</option>
+                                <option value="security">Security & CCTV</option>
+                                <option value="furniture">Furniture Services</option>
+                                <option value="renovation">Renovation & Painting</option>
+                                <option value="fabrication">Fabrication</option>
+                                <option value="manpower">Manpower Supply</option>
+                                <option value="events">Event Management</option>
+                                <option value="roadside">Roadside Assistance</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Icon (Emoji) *</label>
+                            <input type="text" id="serviceIcon" value="🔧" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;transition:all 0.2s;" placeholder="🔧">
+                        </div>
+                        
+                        <div style="margin-bottom:24px;">
+                            <label style="display:flex;align-items:center;cursor:pointer;">
+                                <input type="checkbox" id="serviceActive" checked style="margin-right:10px;width:18px;height:18px;cursor:pointer;">
+                                <span style="font-weight:500;color:#4a5568;font-size:14px;">Service is Active</span>
+                            </label>
+                        </div>
+                        
+                        <div style="display:flex;gap:12px;">
+                            <button type="button" onclick="closeAddServiceModal()" class="modal-btn modal-btn-secondary" style="flex:1;">Cancel</button>
+                            <button type="submit" class="modal-btn modal-btn-success" style="flex:1;">Add Service</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            document.getElementById('addServiceForm').addEventListener('submit', handleAddService);
+        }
+        
+        function closeAddServiceModal() {
+            const modal = document.getElementById('addServiceModal');
+            if (modal) modal.remove();
+        }
+        
+        async function handleAddService(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('serviceTitle').value;
+            const description = document.getElementById('serviceDescription').value;
+            const category = document.getElementById('serviceCategory').value;
+            const icon = document.getElementById('serviceIcon').value;
+            const isActive = document.getElementById('serviceActive').checked;
+            
+            try {
+                const response = await fetch('/api/services', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, description, category, icon, isActive })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Service created successfully!');
+                    closeAddServiceModal();
+                    renderAdminServices();
+                } else {
+                    alert('Error creating service: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error creating service. Please try again.');
+            }
+        }
+        
+        async function editService(serviceId) {
+            try {
+                const response = await fetch('/api/services');
+                const services = await response.json();
+                const service = services.find(s => s._id === serviceId);
+                
+                if (!service) return alert('Service not found');
+                
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.id = 'editServiceModal';
+                modal.innerHTML = `
+                    <div style="background:white;padding:30px;border-radius:16px;max-width:500px;width:95%;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                            <h3 style="font-size:20px;font-weight:700;color:#2d3748;">Edit Service</h3>
+                            <button onclick="closeEditServiceModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#718096;transition:color 0.2s;" onmouseover="this.style.color='#2d3748'" onmouseout="this.style.color='#718096'">&times;</button>
+                        </div>
+                        
+                        <form id="editServiceForm">
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Service Title *</label>
+                                <input type="text" id="editServiceTitle" value="${service.title}" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Description</label>
+                                <textarea id="editServiceDescription" rows="3" style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;resize:vertical;font-size:14px;">${service.description || ''}</textarea>
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Category *</label>
+                                <select id="editServiceCategory" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                                    <option value="electrical" ${service.category === 'electrical' ? 'selected' : ''}>Electrical Services</option>
+                                    <option value="plumbing" ${service.category === 'plumbing' ? 'selected' : ''}>Plumbing Services</option>
+                                    <option value="appliance" ${service.category === 'appliance' ? 'selected' : ''}>Appliance Repair</option>
+                                    <option value="ac" ${service.category === 'ac' ? 'selected' : ''}>AC Services</option>
+                                    <option value="security" ${service.category === 'security' ? 'selected' : ''}>Security & CCTV</option>
+                                    <option value="furniture" ${service.category === 'furniture' ? 'selected' : ''}>Furniture Services</option>
+                                    <option value="renovation" ${service.category === 'renovation' ? 'selected' : ''}>Renovation & Painting</option>
+                                    <option value="fabrication" ${service.category === 'fabrication' ? 'selected' : ''}>Fabrication</option>
+                                    <option value="manpower" ${service.category === 'manpower' ? 'selected' : ''}>Manpower Supply</option>
+                                    <option value="events" ${service.category === 'events' ? 'selected' : ''}>Event Management</option>
+                                    <option value="roadside" ${service.category === 'roadside' ? 'selected' : ''}>Roadside Assistance</option>
+                                    <option value="other" ${service.category === 'other' ? 'selected' : ''}>Other</option>
+                                </select>
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Icon (Emoji) *</label>
+                                <input type="text" id="editServiceIcon" value="${service.icon}" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                            </div>
+                            
+                            <div style="margin-bottom:24px;">
+                                <label style="display:flex;align-items:center;cursor:pointer;">
+                                    <input type="checkbox" id="editServiceActive" ${service.isActive ? 'checked' : ''} style="margin-right:10px;width:18px;height:18px;cursor:pointer;">
+                                    <span style="font-weight:500;color:#4a5568;font-size:14px;">Service is Active</span>
+                                </label>
+                            </div>
+                            
+                            <div style="display:flex;gap:12px;">
+                                <button type="button" onclick="closeEditServiceModal()" class="modal-btn modal-btn-secondary" style="flex:1;">Cancel</button>
+                                <button type="submit" class="modal-btn modal-btn-primary" style="flex:1;">Update Service</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                document.getElementById('editServiceForm').addEventListener('submit', (e) => handleEditService(e, serviceId));
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading service details');
+            }
+        }
+        
+        function closeEditServiceModal() {
+            const modal = document.getElementById('editServiceModal');
+            if (modal) modal.remove();
+        }
+        
+        async function handleEditService(e, serviceId) {
+            e.preventDefault();
+            
+            const title = document.getElementById('editServiceTitle').value;
+            const description = document.getElementById('editServiceDescription').value;
+            const category = document.getElementById('editServiceCategory').value;
+            const icon = document.getElementById('editServiceIcon').value;
+            const isActive = document.getElementById('editServiceActive').checked;
+            
+            try {
+                const updateResponse = await fetch(`/api/services/${serviceId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, description, icon, category, isActive })
+                });
+                
+                const result = await updateResponse.json();
+                
+                if (result.success) {
+                    alert('Service updated successfully!');
+                    closeEditServiceModal();
+                    renderAdminServices();
+                } else {
+                    alert('Error updating service: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating service. Please try again.');
+            }
+        }
+        
+        async function deleteServiceHandler(serviceId) {
+            if (!confirm('Delete service and its sub-services?')) return;
+            
+            try {
+                const response = await fetch(`/api/services/${serviceId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Service deleted successfully!');
+                    renderAdminServices();
+                } else {
+                    alert('Error deleting service');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting service');
+            }
+        }
+        
+        async function openSubServiceAdmin(parentId) {
+            try {
+                const serviceResponse = await fetch('/api/services');
+                const services = await serviceResponse.json();
+                const service = services.find(s => s._id === parentId);
+                
+                if (!service) return alert('Service not found');
+                
+                const subResponse = await fetch(`/api/sub-services/${parentId}`);
+                const subServices = await subResponse.json();
+                
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.id = 'subServiceModal';
+                modal.innerHTML = `
+                    <div style="background:white;padding:28px;border-radius:16px;max-width:750px;width:95%;max-height:85%;overflow-y:auto;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                            <h3 style="font-size:20px;font-weight:700;color:#2d3748;">Manage Sub-Services: ${service.title}</h3>
+                            <button onclick="closeSubServiceModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#718096;transition:color 0.2s;" onmouseover="this.style.color='#2d3748'" onmouseout="this.style.color='#718096'">&times;</button>
+                        </div>
+                        
+                        <div style="margin-bottom:24px;">
+                            <button onclick="addNewSubService('${parentId}')" class="add-btn" style="width:auto;"><i class="fas fa-plus"></i> Add Sub-Service</button>
+                        </div>
+                        
+                        <div id="subServicesList">
+                            ${subServices.length === 0 ? '<p style="color:#718096;text-align:center;padding:40px 20px;font-size:15px;">No sub-services added yet. Click "Add Sub-Service" to get started.</p>' : 
+                            subServices.map(ss => `
+                                <div style="border:2px solid #e2e8f0;padding:20px;margin:12px 0;border-radius:12px;background:#f7fafc;transition:all 0.2s;" onmouseover="this.style.borderColor='#cbd5e0'" onmouseout="this.style.borderColor='#e2e8f0'">
+                                    <div style="display:flex;justify-content:space-between;align-items:start;gap:16px;">
+                                        <div style="flex:1;">
+                                            <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:#2d3748;">${ss.icon || '🔧'} ${ss.name}</div>
+                                            <div style="color:#718096;margin-bottom:12px;font-size:14px;line-height:1.5;">${ss.description || 'No description'}</div>
+                                            <div style="font-size:18px;font-weight:700;color:#48bb78;">₹${ss.price}</div>
+                                        </div>
+                                        <div style="display:flex;flex-direction:column;gap:8px;min-width:100px;">
+                                            <button onclick="editSubService('${parentId}','${ss._id}')" class="btn btn-success" style="width:100%;justify-content:center;"><i class="fas fa-edit"></i> Edit</button>
+                                            <button onclick="deleteSubService('${parentId}','${ss._id}')" class="btn btn-danger" style="width:100%;justify-content:center;"><i class="fas fa-trash"></i> Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading sub-services');
+            }
+        }
+        
+        function closeSubServiceModal() {
+            const modal = document.getElementById('subServiceModal');
+            if (modal) modal.remove();
+        }
+        
+        async function addNewSubService(serviceId) {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = 'addSubServiceModal';
+            modal.innerHTML = `
+                <div style="background:white;padding:30px;border-radius:16px;max-width:500px;width:95%;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h3 style="font-size:20px;font-weight:700;color:#2d3748;">Add New Sub-Service</h3>
+                        <button onclick="closeAddSubServiceModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#718096;transition:color 0.2s;" onmouseover="this.style.color='#2d3748'" onmouseout="this.style.color='#718096'">&times;</button>
+                    </div>
+                    
+                    <form id="addSubServiceForm">
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Sub-Service Name *</label>
+                            <input type="text" id="subServiceName" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Description</label>
+                            <textarea id="subServiceDescription" rows="3" style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;resize:vertical;font-size:14px;"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Price (₹) *</label>
+                            <input type="number" id="subServicePrice" min="0" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                        </div>
+                        
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Icon (Emoji) *</label>
+                            <input type="text" id="subServiceIcon" value="🔧" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;" placeholder="🔧">
+                        </div>
+                        
+                        <div style="margin-bottom:24px;">
+                            <label style="display:flex;align-items:center;cursor:pointer;">
+                                <input type="checkbox" id="subServiceActive" checked style="margin-right:10px;width:18px;height:18px;cursor:pointer;">
+                                <span style="font-weight:500;color:#4a5568;font-size:14px;">Sub-Service is Active</span>
+                            </label>
+                        </div>
+                        
+                        <div style="display:flex;gap:12px;">
+                            <button type="button" onclick="closeAddSubServiceModal()" class="modal-btn modal-btn-secondary" style="flex:1;">Cancel</button>
+                            <button type="submit" class="modal-btn modal-btn-success" style="flex:1;">Add Sub-Service</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            document.getElementById('addSubServiceForm').addEventListener('submit', (e) => handleAddSubService(e, serviceId));
+        }
+        
+        function closeAddSubServiceModal() {
+            const modal = document.getElementById('addSubServiceModal');
+            if (modal) modal.remove();
+        }
+        
+        async function handleAddSubService(e, serviceId) {
+            e.preventDefault();
+            
+            const name = document.getElementById('subServiceName').value;
+            const description = document.getElementById('subServiceDescription').value;
+            const price = Number(document.getElementById('subServicePrice').value);
+            const icon = document.getElementById('subServiceIcon').value;
+            const isActive = document.getElementById('subServiceActive').checked;
+            
+            try {
+                const response = await fetch('/api/sub-services', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        serviceId: serviceId, 
+                        name: name, 
+                        description: description, 
+                        price: price, 
+                        icon: icon,
+                        isActive: isActive
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Sub-service added successfully!');
+                    closeAddSubServiceModal();
+                    closeSubServiceModal();
+                    openSubServiceAdmin(serviceId);
+                    renderAdminServices();
+                } else {
+                    alert('Error adding sub-service: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding sub-service. Please try again.');
+            }
+        }
+        
+        async function editSubService(parentId, subId) {
+            try {
+                const response = await fetch(`/api/sub-services/${parentId}`);
+                const subServices = await response.json();
+                const subService = subServices.find(s => s._id === subId);
+                
+                if (!subService) return alert('Sub-service not found');
+                
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.id = 'editSubServiceModal';
+                modal.innerHTML = `
+                    <div style="background:white;padding:30px;border-radius:16px;max-width:500px;width:95%;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                            <h3 style="font-size:20px;font-weight:700;color:#2d3748;">Edit Sub-Service</h3>
+                            <button onclick="closeEditSubServiceModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#718096;transition:color 0.2s;" onmouseover="this.style.color='#2d3748'" onmouseout="this.style.color='#718096'">&times;</button>
+                        </div>
+                        
+                        <form id="editSubServiceForm">
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Sub-Service Name *</label>
+                                <input type="text" id="editSubServiceName" value="${subService.name}" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Description</label>
+                                <textarea id="editSubServiceDescription" rows="3" style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;resize:vertical;font-size:14px;">${subService.description || ''}</textarea>
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Price (₹) *</label>
+                                <input type="number" id="editSubServicePrice" value="${subService.price}" min="0" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                            </div>
+                            
+                            <div style="margin-bottom:16px;">
+                                <label style="display:block;margin-bottom:6px;font-weight:600;color:#2d3748;font-size:14px;">Icon (Emoji) *</label>
+                                <input type="text" id="editSubServiceIcon" value="${subService.icon}" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;">
+                            </div>
+                            
+                            <div style="margin-bottom:24px;">
+                                <label style="display:flex;align-items:center;cursor:pointer;">
+                                    <input type="checkbox" id="editSubServiceActive" ${subService.isActive ? 'checked' : ''} style="margin-right:10px;width:18px;height:18px;cursor:pointer;">
+                                    <span style="font-weight:500;color:#4a5568;font-size:14px;">Sub-Service is Active</span>
+                                </label>
+                            </div>
+                            
+                            <div style="display:flex;gap:12px;">
+                                <button type="button" onclick="closeEditSubServiceModal()" class="modal-btn modal-btn-secondary" style="flex:1;">Cancel</button>
+                                <button type="submit" class="modal-btn modal-btn-primary" style="flex:1;">Update Sub-Service</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                document.getElementById('editSubServiceForm').addEventListener('submit', (e) => handleEditSubService(e, parentId, subId));
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading sub-service details');
+            }
+        }
+        
+        function closeEditSubServiceModal() {
+            const modal = document.getElementById('editSubServiceModal');
+            if (modal) modal.remove();
+        }
+        
+        async function handleEditSubService(e, parentId, subId) {
+            e.preventDefault();
+            
+            const name = document.getElementById('editSubServiceName').value;
+            const description = document.getElementById('editSubServiceDescription').value;
+            const price = Number(document.getElementById('editSubServicePrice').value);
+            const icon = document.getElementById('editSubServiceIcon').value;
+            const isActive = document.getElementById('editSubServiceActive').checked;
+            
+            try {
+                const updateResponse = await fetch(`/api/sub-services/${subId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name: name, 
+                        description: description, 
+                        price: price, 
+                        icon: icon,
+                        isActive: isActive
+                    })
+                });
+                
+                const result = await updateResponse.json();
+                
+                if (result.success) {
+                    alert('Sub-service updated successfully!');
+                    closeEditSubServiceModal();
+                    closeSubServiceModal();
+                    openSubServiceAdmin(parentId);
+                    renderAdminServices();
+                } else {
+                    alert('Error updating sub-service: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error updating sub-service. Please try again.');
+            }
+        }
+        
+        async function deleteSubService(parentId, subId) {
+            if (!confirm('Are you sure you want to delete this sub-service? This action cannot be undone.')) return;
+            
+            try {
+                const response = await fetch(`/api/sub-services/${subId}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Sub-service deleted successfully!');
+                    closeSubServiceModal();
+                    openSubServiceAdmin(parentId);
+                    renderAdminServices();
+                } else {
+                    alert('Error deleting sub-service: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting sub-service. Please try again.');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    if (tabName) {
+                        showTab(tabName);
+                    }
+                });
+            });
+            
+            loadStats();
+            loadQuotes();
+        });
+        
+        if (document.readyState !== 'loading') {
+            loadStats();
+            loadQuotes();
+        }
+    </script>
+</body>
+</html>

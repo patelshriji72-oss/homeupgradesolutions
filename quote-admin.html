@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Admin - Home Upgrade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #ffd700;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .quotes-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .quote-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .quote-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .quote-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .quote-service {
+            background: #ffd700;
+            color: #333;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .quote-details {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .export-btn, .clear-btn {
+            background: #333;
+            color: #ffd700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .clear-btn {
+            background: #f44336;
+            color: white;
+        }
+        
+        .export-btn:hover, .clear-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffd700, #ffeb3b);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            min-width: 300px;
+        }
+        
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: #333;
+            color: #ffd700;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p id="loginError" style="color: red; display: none;">Invalid credentials!</p>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="container" style="display: none;">
+        <div class="header">
+            <h1>📋 Quote Admin</h1>
+            <p>Manage quote requests</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalQuotes">0</div>
+                    <div>Total Quotes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todayQuotes">0</div>
+                    <div>Today's Requests</div>
+                </div>
+            </div>
+            
+            <h3>Quote Requests</h3>
+            <div class="quotes-list" id="quotesList">
+                <p>No quote requests yet.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="export-btn" onclick="exportQuotes()">📥 Export CSV</button>
+                <button class="clear-btn" onclick="clearQuotes()">🗑️ Clear All</button>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Admin credentials
+        const ADMIN_USERNAME = 'admin';
+        const ADMIN_PASSWORD = 'homeupgrade2024';
+        
+        // Check if user is logged in
+        function checkAuth() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadQuotes();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        }
+        
+        // Login function
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                checkAuth();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            checkAuth();
+        }
+        
+        function loadQuotes() {
+            const quotes = JSON.parse(localStorage.getItem('quoteRequests') || '[]');
+            const quotesList = document.getElementById('quotesList');
+            const totalCount = document.getElementById('totalQuotes');
+            
+            totalCount.textContent = quotes.length;
+            
+            if (quotes.length === 0) {
+                quotesList.innerHTML = '<p>No quote requests yet.</p>';
+                return;
+            }
+            
+            quotesList.innerHTML = quotes.map((quote, index) => `
+                <div class="quote-item">
+                    <div class="quote-header">
+                        <span class="quote-name">${quote.name}</span>
+                        <span class="quote-service">${quote.service || 'General'}</span>
+                    </div>
+                    <div class="quote-details">
+                        <strong>Email:</strong> ${quote.email}<br>
+                        <strong>Phone:</strong> ${quote.phone || 'Not provided'}<br>
+                        <strong>Message:</strong> ${quote.message || 'No message'}<br>
+                        <strong>Date:</strong> ${quote.date || 'Unknown'}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function exportQuotes() {
+            const quotes = JSON.parse(localStorage.getItem('quoteRequests') || '[]');
+            if (quotes.length === 0) {
+                alert('No quotes to export!');
+                return;
+            }
+            
+            const csv = 'Name,Email,Phone,Service,Message,Date\\n' + 
+                quotes.map(q => `"${q.name}","${q.email}","${q.phone || ''}","${q.service || ''}","${q.message || ''}","${q.date || ''}"`).join('\\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'quote-requests.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function clearQuotes() {
+            if (confirm('Are you sure you want to clear all quote requests?')) {
+                localStorage.removeItem('quoteRequests');
+                loadQuotes();
+            }
+        }
+        
+        // Initialize
+        checkAuth();
+        
+        // Refresh every 5 seconds
+        setInterval(() => {
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                loadQuotes();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

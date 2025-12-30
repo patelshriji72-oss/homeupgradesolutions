@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Upgrade - Smart Home Repair Services</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Mobile Navigation -->
+  <nav style="background:#ffd700;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;">
+    <div style="font-size:24px;font-weight:bold;color:#2c3e50;">Home Upgrade</div>
+    
+    <ul id="navMenu" style="display:flex;list-style:none;gap:30px;margin:0;padding:0;">
+      <li><a href="home.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:25px;">Home</a></li>
+      <li><a href="service.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:25px;">Service</a></li>
+      <li><a href="blog.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:25px;">Blog</a></li>
+      <li><a href="aboutus.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:25px;">About Us</a></li>
+      <li><a href="contact.html" style="color:#2c3e50;text-decoration:none;font-weight:600;padding:8px 16px;border-radius:25px;">Contact</a></li>
+    </ul>
+    
+    <button id="burgerBtn" onclick="toggleMenu()" style="display:none;background:none;border:none;font-size:24px;color:#2c3e50;cursor:pointer;padding:10px;">☰</button>
+  </nav>
+  
+  <style>
+    @media (max-width: 768px) {
+      #navMenu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: #ffd700 !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+        display: none !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+      }
+      #navMenu.active { display: flex !important; }
+      #navMenu li { width: 100%; border-bottom: 1px solid rgba(51,51,51,0.1); }
+      #navMenu a { display: block; padding: 15px 20px; border-radius: 0; width: 100%; text-align: left; }
+      #burgerBtn { display: block !important; }
+    }
+  </style>
+  
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('active');
+      console.log('Menu toggled');
+    }
+  </script>
+
+  <section class="testimonial">
+    <div class="testimonial-container">
+      <div class="testimonial-left">
+        <h2>Your satisfaction is<br>guaranteed with us</h2>
+        <span class="tag">Bathroom Renovation</span>
+        <p class="quote">
+          "I was extremely impressed with the smart home repair and service provided by HomePro. 
+          Their technicians were prompt, knowledgeable, and resolved my issues efficiently. 
+          I highly recommend their exceptional service for all smart home needs."
+        </p>
+        <div class="controls">
+          <button class="control-btn"><i class='bx bx-left-arrow-alt'></i></button>
+          <div class="dots">
+            <span class="dot"></span>
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <button class="control-btn active"><i class='bx bx-right-arrow-alt'></i></button>
+        </div>
+      </div>
+      <div class="testimonial-right">
+        <div class="img-stack">
+          <img src="images/images (3).jpg" alt="Bathroom" class="img-back">
+          <img src="images/images (4).jpg" alt="Smiling woman" class="img-front">
+          <div class="name-badge">
+            <p><strong>Kende Attila</strong></p>
+            <div class="stars">
+              <i class='bx bxs-star'></i>
+              <i class='bx bxs-star'></i>
+              <i class='bx bxs-star'></i>
+              <i class='bx bxs-star'></i>
+              <i class='bx bxs-star-half'></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-section">
+    <div class="container">
+      <h1>Explore Insights in Our Blog</h1>
+      <p class="subtitle">Find lots of insights and information on our blog. Explore, learn, and get inspired today.</p>
+      <div class="blog-grid">
+        <div class="blog-card">
+          <img src="images/images (7).jpg" alt="Smart Home">
+          <div class="blog-content">
+            <p class="date">19 Jan 2023</p>
+            <h2>Understanding Smart Home Systems & Maintenance</h2>
+            <p class="desc">Discover the ultimate guide to troubleshooting common smart home issues in our latest blog post.</p>
+            <div class="tags">
+              <span>Plumbing</span>
+              <span>Architecture</span>
+              <span>Maintenance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="view-more">View More →</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col footer-brand">
+        <h2 class="logo">
+          <img src="images/WhatsApp Image 2025-11-11 at 3.14.03 PM (1).jpeg" alt="HomePro Logo"> Homeupgrade
+        </h2>
+        <p>Home Pro is your premier destination for top-notch smart home service and repair.</p>
+        <p class="contact"><span>📞</span> (888) 617–5894</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

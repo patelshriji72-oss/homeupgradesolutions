@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Test Data</title>
+</head>
+<body>
+    <h2>Add Test Data</h2>
+    <button onclick="addTestData()">Add Sample Newsletter & Quote Data</button>
+    
+    <script>
+    function addTestData() {
+        // Add sample newsletter subscribers
+        const subscribers = [
+            'john@example.com',
+            'sarah@example.com', 
+            'mike@example.com'
+        ];
+        localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+        
+        // Add sample quote requests
+        const quotes = [
+            {
+                name: 'John Doe',
+                email: 'john@example.com',
+                phone: '+1234567890',
+                service: 'Electrical',
+                message: 'Need electrical work in kitchen',
+                date: new Date().toLocaleDateString()
+            },
+            {
+                name: 'Sarah Smith', 
+                email: 'sarah@example.com',
+                phone: '+0987654321',
+                service: 'Plumbing',
+                message: 'Bathroom renovation needed',
+                date: new Date().toLocaleDateString()
+            }
+        ];
+        localStorage.setItem('quoteRequests', JSON.stringify(quotes));
+        
+        alert('Test data added! Now check admin panels.');
+    }
+    </script>
+</body>
+</html>
